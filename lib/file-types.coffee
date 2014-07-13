@@ -42,15 +42,15 @@ module.exports =
       # Skip special settings
       # (hopefully this won't conflict with any file types)
       continue if /^\$/.test fileType
-      @fileTypes[".#{fileType}"] = scopeName
+      @fileTypes[fileType] = scopeName
     @_log @fileTypes
 
   _tryToSetGrammar: (editor) ->
     filename = basename editor.getPath()
     ext = extname filename
     unless ext
-      @_log 'no extension...skipping'
-      return
+      # Find scopeName for filename
+      ext = filename
     scopeName = @fileTypes[ext]
     unless scopeName?
       @_log "no custom scopeName for #{ext}...skipping"
